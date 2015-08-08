@@ -1,0 +1,50 @@
+import os, sys, glob, copy
+from os import path, access, R_OK  # W_OK for write permission.
+from operator import itemgetter, attrgetter
+import pprint
+import bibtexparser
+
+# define the makebib function which extracts references from pdfs
+def makebib(filename):
+	bashCommand = "pdf-extract extract-bib --resolved_references %s" % filename
+	os.system(bashCommand)
+
+#make a list of paper names from the master bibtex file
+filenames = []
+with open('PhD_citations.bib') as bibtex_file:
+	bibtex_str = bibtex_file.read()
+	bib_database = bibtexparser.loads(bibtex_str)
+	citations = (bib_database.entries)
+	for citation in citations:
+		cited = citation["ID"]
+		print cited
+		filenames.append(cited)
+
+print filenames
+
+#	extract the ids
+#	add them to filenames
+# for filename in filenames:
+#	if filename.pdf exists in folder:
+#		makebib(filename)
+
+# or:
+#for root, dirs, files in os.walk(directory):
+#    for file in files:
+#        if file.endswith('.pdf'):
+#            makebib(file)
+# or:
+
+import glob
+path = "*.pdf"
+for fname in glob.glob(path):
+	#if fname splitex matches something in bib, continue, if not, discard it.
+	name = os.path.splitext(fname)[0]
+	print name
+	print type(name)
+find rough string matches
+	if str(name) in filenames:
+		print "found probable match for bib id in %s" % name
+#		makebib(fname)
+	else:
+		print "didn't find match for bib id"

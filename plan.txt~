@@ -1,0 +1,7 @@
+put all phd pdfs in a folder
+
+rename all files in bibtex format - authorSurname_year
+
+write a bash / python script which iterates through every pdf in the folder "pdf-extract extract-bib --resolved_references %s.pdf"
+
+write a script which reads each .bib file, writes into a csv file two columns - the paper name and the citation name.
